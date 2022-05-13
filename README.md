@@ -21,9 +21,11 @@ Supports OpenHarmony API version 8
 ## Examples
 
 ### Round Image
-![Round Image](sample_images/round image.jpg)
+
+<image src="/sample_images/round image.jpg" alt="Rounded Image"  width="" height="">
+
 ### Oval Image
-![Oval Image](sample_images/oval image.jpg)
+<image src="/sample_images/oval image.jpg" alt="Oval Image"  width="" height="">
 
 ## Code Contribution
 If you find any problems during usage, you can submit an [Issue](https://github.com/Applib-OpenHarmony/RoundedImageView/issues) to us. Of course, we also welcome you to send us [PR](https://github.com/Applib-OpenHarmony/RoundedImageView/pulls).
