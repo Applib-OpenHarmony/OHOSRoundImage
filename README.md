@@ -1,6 +1,6 @@
-# Round Image View
+# Round Image 
 
-This library is developed to provide rounded image corners implemented using extended typescript.
+This library is developed to provide rounded image corners and oval shaped image implemented using extended typescript.
 
 ## Installation
 
@@ -12,7 +12,7 @@ Preview the project and edit in the index page to get the results.
 Displaying of images can be circular or oval.
 You need to import the following:
 ```ets
-import  { RoundImage, OvalImage } from '../common/roundImage'
+import { RoundImage, OvalImage } from '@ohos/libroundimage'
 ```
 
 ## Compatibility
@@ -21,11 +21,25 @@ Supports OpenHarmony API version 8
 ## Examples
 
 ### Round Image
-
-<image src="/sample_images/round image.jpg" alt="Rounded Image"  width="" height="">
+RoundImage({
+          borderRadius: $borderRadius,
+          needBorder: true,
+          borderWidth: 10,
+          imageWidth: $imageWidth,
+          imageHeight: $imageHeight,
+          imageResource: $imageResource,
+          objectFit: $objectFit
+        })
 
 ### Oval Image
-<image src="/sample_images/oval image.jpg" alt="Oval Image"  width="" height="">
+OvalImage({
+          imageSource: $imageSource,
+          imageWidth: $ovalImageWidth,
+          imageHeight: $ovalImageHeight,
+          borderWidth: 5,
+          borderColorStr: '#00FFFF',
+          needBorder: true
+        })
 
 ## Code Contribution
 If you find any problems during usage, you can submit an [Issue](https://github.com/Applib-OpenHarmony/RoundedImageView/issues) to us. Of course, we also welcome you to send us [PR](https://github.com/Applib-OpenHarmony/RoundedImageView/pulls).

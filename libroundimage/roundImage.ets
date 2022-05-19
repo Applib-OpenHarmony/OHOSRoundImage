@@ -18,10 +18,18 @@ export struct RoundImage {
   @Link imageWidth: number
   @Link imageHeight: number
   @Link borderRadius: number
-  @Link borderWidth: number
-  @Link borderColor: number
+  @Prop needBorder: boolean
+  @State borderWidth: number = 5
+  @State borderColorStr: string = '#FF00FF'
+  @State borderColor: number = Color.Blue
   @Link imageResource: Resource
   @Link objectFit: ImageFit
+
+  aboutToAppear() {
+    if (!this.needBorder) {
+      this.borderWidth = 0
+    }
+  }
 
   build() {
     Image(this.imageResource)
@@ -38,6 +46,10 @@ export struct OvalImage {
   @Link imageSource: string
   @Link imageWidth: number
   @Link imageHeight: number
+  @Prop needBorder: boolean
+  @State borderWidth: number = 5
+  @State borderColorStr: string = '#FF00FF'
+  @State borderColor: number = Color.White
   private settings: RenderingContextSettings = new RenderingContextSettings(true)
   private context: CanvasRenderingContext2D = new CanvasRenderingContext2D(this.settings)
   private img: ImageBitmap
@@ -56,12 +68,17 @@ export struct OvalImage {
         this.context.bezierCurveTo(r.x + 0.25 * r.w, r.y, r.x, r.y + 0.25 * r.h, r.x, r.y + 0.5 * r.h);
         this.context.bezierCurveTo(r.x, r.y + 0.75 * r.h, r.x + 0.25 * r.w, r.y + r.h, r.x + 0.5 * r.w, r.y + r.h);
         this.context.bezierCurveTo(r.x + 0.75 * r.w, r.y + r.h, r.x + r.w, r.y + 0.75 * r.h, r.x + r.w, r.y + 0.5 * r.h);
+
         this.context.closePath();
+        if (this.needBorder) {
+          this.context.lineWidth = this.borderWidth;
+          this.context.strokeStyle = this.borderColorStr;
+          this.context.stroke();
+        }
         this.context.clip();
+
         this.context.drawImage(this.img, r.x, r.y, r.w, r.h);
         this.context.restore();
       })
-      .aspectRatio(0)
   }
 }
-
