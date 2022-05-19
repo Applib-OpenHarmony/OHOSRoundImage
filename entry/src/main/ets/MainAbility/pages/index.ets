@@ -13,32 +13,33 @@
  * limitations under the License.
  */
 
-import  { RoundImage, OvalImage } from '../common/roundImage'
+import { RoundImage, OvalImage } from '@ohos/libroundimage'
 
 @Entry
 @Component
 struct Index {
-  @State borderRadius: number = 75
-  @State borderWidth: number = 10
+  @State borderRadius: number = 100
+  @State borderWidth: number = 5
   @State borderColor: number = Color.Green
+  @State borderColorStr: string = '#00FF00'
   @State imageWidth: number = 150
   @State imageHeight: number = 150
   @State imageResource: Resource = $r('app.media.icon')
   @State objectFit: ImageFit = ImageFit.Contain
   @State imageSource: string = '/common/images/test1.jpg'
-
+  @State imageSource1: string = '/common/images/user.png'
   @State ovalImageWidth: number = 200
   @State ovalImageHeight: number = 150
-
-
+  @State ovalImageWidth1: number = 50
+  @State ovalImageHeight1: number = 100
 
   build() {
     Row() {
       Column() {
         RoundImage({
           borderRadius: $borderRadius,
-          borderWidth: $borderWidth,
-          borderColor: $borderColor,
+          needBorder: true,
+          borderWidth: 10,
           imageWidth: $imageWidth,
           imageHeight: $imageHeight,
           imageResource: $imageResource,
@@ -47,7 +48,16 @@ struct Index {
         OvalImage({
           imageSource: $imageSource,
           imageWidth: $ovalImageWidth,
-          imageHeight: $ovalImageHeight
+          imageHeight: $ovalImageHeight,
+          borderWidth: 5,
+          borderColorStr: '#00FFFF',
+          needBorder: true
+        })
+        OvalImage({
+          imageSource: $imageSource1,
+          imageWidth: $ovalImageWidth1,
+          imageHeight: $ovalImageHeight1,
+          needBorder: false
         })
       }
       .width('100%')
