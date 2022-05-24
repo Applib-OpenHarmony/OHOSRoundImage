@@ -5,7 +5,7 @@ This library is developed to provide rounded image corners and oval shaped image
 ## Installation
 
 Install [dev eco studio](https://developer.harmonyos.com/cn/develop/deveco-studio#download_beta_openharmony) and open the project. 
-Preview the project and edit in the index page to get the results.
+
 
 ## Usage
 

@@ -21,9 +21,13 @@ export struct RoundImage {
   @Prop needBorder: boolean
   @State borderWidth: number = 5
   @State borderColorStr: string = '#FF00FF'
-  @State borderColor: number = Color.Blue
   @Link imageResource: Resource
   @Link objectFit: ImageFit
+  @State marginLeft: number = 0
+  @State marginRight: number = 0
+  @State marginTop: number = 0
+  @State marginBottom: number = 0
+  private onClick: (() => void)
 
   aboutToAppear() {
     if (!this.needBorder) {
@@ -37,7 +41,43 @@ export struct RoundImage {
       .width(this.imageWidth)
       .height(this.imageHeight)
       .borderRadius(this.borderRadius)
-      .border({ width: this.borderWidth, color: this.borderColor })
+      .border({ width: this.borderWidth, color: this.borderColorStr })
+      .margin({ top: this.marginTop, bottom: this.marginBottom, left: this.marginLeft, right: this.marginRight })
+      .onClick(() => this.onClick())
+  }
+}
+
+@Component
+export struct RoundImageSource {
+  @Link imageWidth: number
+  @Link imageHeight: number
+  @Link borderRadius: number
+  @Prop needBorder: boolean
+  @State borderWidth: number = 5
+  @State borderColorStr: string = '#FF00FF'
+  @State imageSource: string = ''
+  @Link objectFit: ImageFit
+  @State marginLeft: number = 0
+  @State marginRight: number = 0
+  @State marginTop: number = 0
+  @State marginBottom: number = 0
+  private onClick: (() => void)
+
+  aboutToAppear() {
+    if (!this.needBorder) {
+      this.borderWidth = 0
+    }
+  }
+
+  build() {
+    Image(this.imageSource)
+      .objectFit(this.objectFit)
+      .width(this.imageWidth)
+      .height(this.imageHeight)
+      .borderRadius(this.borderRadius)
+      .border({ width: this.borderWidth, color: this.borderColorStr })
+      .margin({ top: this.marginTop, bottom: this.marginBottom, left: this.marginLeft, right: this.marginRight })
+      .onClick(() => this.onClick())
   }
 }
 
@@ -47,16 +87,21 @@ export struct OvalImage {
   @Link imageWidth: number
   @Link imageHeight: number
   @Prop needBorder: boolean
+  @State marginLeft: number = 0
+  @State marginRight: number = 0
+  @State marginTop: number = 0
+  @State marginBottom: number = 0
   @State borderWidth: number = 5
   @State borderColorStr: string = '#FF00FF'
-  @State borderColor: number = Color.White
   private settings: RenderingContextSettings = new RenderingContextSettings(true)
   private context: CanvasRenderingContext2D = new CanvasRenderingContext2D(this.settings)
   private img: ImageBitmap
+  private onClick: (() => void)
 
   build() {
     Canvas(this.context)
-      .width(this.imageWidth).height(this.imageHeight)
+      .width(this.imageWidth)
+      .height(this.imageHeight)
       .onReady(() => {
         this.img = new ImageBitmap(this.imageSource)
         this.context.imageSmoothingEnabled = false
@@ -70,15 +115,20 @@ export struct OvalImage {
         this.context.bezierCurveTo(r.x + 0.75 * r.w, r.y + r.h, r.x + r.w, r.y + 0.75 * r.h, r.x + r.w, r.y + 0.5 * r.h);
 
         this.context.closePath();
+        this.context.clip();
         if (this.needBorder) {
           this.context.lineWidth = this.borderWidth;
           this.context.strokeStyle = this.borderColorStr;
-          this.context.stroke();
         }
-        this.context.clip();
 
         this.context.drawImage(this.img, r.x, r.y, r.w, r.h);
+        if (this.needBorder) {
+          this.context.stroke();
+        }
         this.context.restore();
       })
+      .aspectRatio(0)
+      .margin({ top: this.marginTop, bottom: this.marginBottom, left: this.marginLeft, right: this.marginRight })
+      .onClick(() => this.onClick())
   }
 }
