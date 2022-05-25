@@ -2,31 +2,31 @@
   "string": [
     {
       "name": "entry_desc",
-      "value": "description"
+      "value": "描述"
     },
     {
       "name": "MainAbility_desc",
-      "value": "description"
+      "value": "描述"
     },
     {
       "name": "MainAbility_label",
-      "value": "label"
+      "value": "标签"
     },
     {
       "name": "round_image",
-      "value": "Round Image"
+      "value": "圆形图像"
     },
     {
       "name": "oval_image",
-      "value": "Oval Image"
+      "value": "椭圆形图像"
     },
     {
       "name": "round_image_click",
-      "value": "Round Image is clicked"
+      "value": "单击圆形图像"
     },
     {
       "name": "oval_image_click",
-      "value": "Oval Image is clicked"
+      "value": "单击椭圆形图像"
     }
   ]
 }
