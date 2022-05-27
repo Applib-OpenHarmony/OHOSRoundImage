@@ -108,7 +108,7 @@ struct Index {
 
   updateModelOvalForFirst() {
     this.model_oval.reset()
-    this.model_oval.setSrcPath(this.imageSource1)
+    this.model_oval.setSrcPath(this.imageSource2)
     this.model_oval.setImageWidth(this.ovalImageWidth)
     this.model_oval.setImageHeight(this.ovalImageHeight)
     this.model_oval.setNeedBorder(true)

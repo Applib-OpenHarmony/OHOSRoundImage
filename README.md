@@ -1,4 +1,4 @@
-# Round Image View
+# Round Image
 
 This library is developed to provide rounded image corners and oval shaped image implemented using extended typescript.
 
