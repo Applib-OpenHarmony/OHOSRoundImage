@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "RoundedImageView",
+        "License": "Apache-2.0 License",
+        "License File": " LICENSE ",
+        "Version Number": "2.3.0",
+        "Owner" : "vinc3m1"
+        "Upstream URL": "https://github.com/vinc3m1/RoundedImageView",
+        "Description": "A fast ImageView that supports rounded corners, ovals, and circles."
+    }
+]
