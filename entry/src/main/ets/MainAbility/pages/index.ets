@@ -13,14 +13,19 @@
  * limitations under the License.
  */
 
-import { RoundImage, RoundImageSource, OvalImage } from '@ohos/libroundimage'
+import { RoundImage, OvalImage, RoundImageModel, OvalImageModel, ClickListener } from '@ohos/libroundimage'
 import prompt from '@system.prompt';
 
 @Entry
 @Component
 struct Index {
+  model: RoundImageModel.Model = new RoundImageModel.Model();
+  model_second: RoundImageModel.Model = new RoundImageModel.Model();
+  model_third: RoundImageModel.Model = new RoundImageModel.Model();
+  model_oval: OvalImageModel.Model = new OvalImageModel.Model();
+  model_oval_second: OvalImageModel.Model = new OvalImageModel.Model();
+  model_oval_third: OvalImageModel.Model = new OvalImageModel.Model();
   @State borderRadius: number = 100
-  @State borderWidth: number = 5
   @State borderColor: number = Color.Green
   @State borderColorStr: string = '#00FF00'
   @State imageWidth: number = 150
@@ -30,9 +35,9 @@ struct Index {
   @State borderRadius1: number = 50
   @State imageResource: Resource = $r('app.media.icon')
   @State imageResource1: Resource = $r('app.media.test1')
-  @State objectFit: ImageFit = ImageFit.Fill
-  @State objectFit1: ImageFit = ImageFit.Cover
-  @State imageSource: string = '/common/images/photo3.jpg'
+  @State objectFit: ImageFit = ImageFit.Contain
+  @State objectFit1: ImageFit = ImageFit.Fill
+  @State imageSource: string = '/common/images/test1.jpg'
   @State imageSource1: string = '/common/images/user.png'
   @State imageSource2: string = '/common/images/photo2.jpg'
   @State ovalImageWidth: number = 200
@@ -42,19 +47,116 @@ struct Index {
   @State showRounded: boolean = true
   @State showOval: boolean = false
 
+  public aboutToAppear(): void {
+    this.updateModelForFirst()
+    this.updateModelForSecond()
+    this.updateModelForThird()
+    this.updateModelOvalForFirst()
+    this.updateModelOvalForSecond()
+    this.updateModelOvalForThird()
+  }
+
+  updateModelForFirst() {
+    this.model.reset()
+    this.model.setSrcPath(this.imageResource)
+    this.model.setBorderRadius(this.borderRadius)
+    this.model.setNeedBorder(true)
+    this.model.setBorderWidth(10)
+    this.model.setBorderColor('#0000FF')
+    this.model.setImageWidth(this.imageWidth)
+    this.model.setImageHeight(this.imageHeight)
+    this.model.setObjectFit(this.objectFit)
+    this.model.setClickListener({
+      onClick() {
+        console.info('onClick event reached app')
+        prompt.showToast({
+          message: 'Round Image is clicked'
+        })
+      }
+    })
+  }
+
+  updateModelForSecond() {
+    this.model_second.reset()
+    this.model_second.setSrcPath(this.imageResource1)
+    this.model_second.setBorderRadius(100)
+    this.model_second.setNeedBorder(true)
+    this.model_second.setBorderWidth(5)
+    this.model_second.setImageWidth(this.imageWidth)
+    this.model_second.setImageHeight(this.imageHeight)
+    this.model_second.setObjectFit(this.objectFit1)
+  }
+
+  updateModelForThird() {
+    this.model_third.reset()
+    this.model_third.setSrcPath('/common/images/test1.jpg')
+    this.model_third.setBorderRadius(this.borderRadius1)
+    this.model_third.setNeedBorder(false)
+    this.model_third.setBorderWidth(5)
+    this.model_third.setImageWidth(this.imageWidth1)
+    this.model_third.setImageHeight(this.imageHeight1)
+    this.model_third.setObjectFit(this.objectFit1)
+    this.model_third.setClickListener({
+      onClick() {
+        console.info('onClick event reached app')
+        prompt.showToast({
+          message: 'Round Image is clicked'
+        })
+      }
+    })
+  }
+
+  updateModelOvalForFirst() {
+    this.model_oval.reset()
+    this.model_oval.setSrcPath(this.imageSource2)
+    this.model_oval.setImageWidth(this.ovalImageWidth)
+    this.model_oval.setImageHeight(this.ovalImageHeight)
+    this.model_oval.setNeedBorder(true)
+    this.model_oval.setBorderWidth(5)
+    this.model_oval.setBorderColor('#00FFFF')
+    this.model_oval.setMarginTop(0)
+    this.model_oval.setMarginBottom(0)
+    this.model_oval.setMarginLeft(0)
+    this.model_oval.setMarginRight(0)
+  }
+
+  updateModelOvalForSecond() {
+    this.model_oval_second.reset()
+    this.model_oval_second.setSrcPath(this.imageSource)
+    this.model_oval_second.setImageWidth(this.ovalImageWidth1)
+    this.model_oval_second.setImageHeight(this.ovalImageHeight1)
+    this.model_oval_second.setNeedBorder(true)
+    this.model_oval_second.setBorderWidth(5)
+    this.model_oval_second.setBorderColor('#0000FF')
+    this.model_oval_second.setClickListener({
+      onClick() {
+        console.info('onClick event reached app')
+        prompt.showToast({
+          message: 'Oval Image is clicked'
+        })
+      }
+    })
+  }
+
+  updateModelOvalForThird() {
+    this.model_oval_third.reset()
+    this.model_oval_third.setSrcPath(this.imageSource1)
+    this.model_oval_third.setImageWidth(this.ovalImageWidth1)
+    this.model_oval_third.setImageHeight(this.ovalImageHeight1)
+    this.model_oval_third.setNeedBorder(false)
+    this.model_oval_third.setBorderWidth(3)
+    this.model_oval_third.setBorderColor('#00FFFF')
+  }
+
   build() {
     Row() {
       Column() {
         if (this.showRounded) {
           RoundImage({
-            borderRadius: $borderRadius,
-            needBorder: true,
-            borderWidth: 10,
-            borderColorStr: '#0000FF',
-            imageWidth: $imageWidth,
-            imageHeight: $imageHeight,
-            imageResource: $imageResource,
-            objectFit: $objectFit,
+            model: this.model
+          })
+          RoundImage({
+            model: this.model_second,
             onClick: () => {
               prompt.showToast({
                 message: 'Round Image is clicked'
@@ -62,42 +164,12 @@ struct Index {
             }
           })
           RoundImage({
-            borderRadius: $borderRadius,
-            needBorder: true,
-            borderWidth: 10,
-            imageWidth: $imageWidth,
-            imageHeight: $imageHeight,
-            imageResource: $imageResource1,
-            objectFit: $objectFit1,
-            onClick: () => {
-              prompt.showToast({
-                message: 'Round Image is clicked'
-              })
-            }
-          })
-          RoundImageSource({
-            borderRadius: $borderRadius1,
-            needBorder: true,
-            borderWidth: 5,
-            imageWidth: $imageWidth1,
-            imageHeight: $imageHeight1,
-            imageSource: '/common/images/photo4.jpg',
-            objectFit: $objectFit1,
-            onClick: () => {
-              prompt.showToast({
-                message: 'Round Image is clicked'
-              })
-            }
+            model: this.model_third
           })
         }
         if (this.showOval) {
           OvalImage({
-            imageSource: $imageSource2,
-            imageWidth: $ovalImageWidth,
-            imageHeight: $ovalImageHeight,
-            borderWidth: 5,
-            borderColorStr: '#00FFFF',
-            needBorder: true,
+            model: this.model_oval,
             onClick: () => {
               prompt.showToast({
                 message: 'Oval Image is clicked'
@@ -105,25 +177,10 @@ struct Index {
             }
           })
           OvalImage({
-            imageSource: $imageSource,
-            imageWidth: $ovalImageWidth1,
-            imageHeight: $ovalImageHeight1,
-            borderWidth: 5,
-            borderColorStr: '#0000FF',
-            needBorder: true,
-            onClick: () => {
-              prompt.showToast({
-                message: 'Oval Image is clicked'
-              })
-            }
+            model: this.model_oval_second
           })
           OvalImage({
-            imageSource: $imageSource1,
-            imageWidth: $ovalImageWidth1,
-            imageHeight: $ovalImageHeight1,
-            borderWidth: 3,
-            borderColorStr: '#00FFFF',
-            needBorder: false,
+            model: this.model_oval_third,
             onClick: () => {
               prompt.showToast({
                 message: 'Oval Image is clicked'
