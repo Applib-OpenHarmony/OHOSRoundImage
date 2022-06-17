@@ -2,6 +2,10 @@
 
 This library is developed to provide rounded image corners and oval shaped image implemented using extended typescript.
 
+<img src="screenshots/Oval Image.png" alt="Oval Image">
+
+<img src="screenshots/Rounded Image.png" alt="Rounded Image">
+
 ## Installation
 ```
 npm install @ohos/libroundimage --save
